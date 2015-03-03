@@ -1,5 +1,5 @@
-coffeeScript = require 'coffee-script'
-{updateSyntaxError} = require 'coffee-script/lib/coffee-script/helpers'
+coffeeScript = require 'coffee-react'
+{updateSyntaxError} = require 'coffee-react/lib/helpers'
 fs = require 'fs'
 path = require 'path'
 url = require 'url'

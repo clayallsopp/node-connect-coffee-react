@@ -22,6 +22,25 @@ describe 'middleware', ->
           content.should.eql "(function() {\n  alert(\'welcome\');\n\n}).call(this);\n"
           next()
 
+  it 'should compile a cjsx file', (next) ->
+    rimraf "#{__dirname}/../sample/public", (err) ->
+      options =
+        baseDir: "#{__dirname}/cjsx"
+        src: './view/coffee'
+        dest: './public/js'
+        prefix: '/js'
+      req =
+        url: 'http://localhost/test.js'
+        method: 'GET'
+      res = {}
+      middleware(options) req, res, (err) ->
+        return next err if err
+        fs.readFile "#{__dirname}/cjsx/public/js/test.js", 'utf8', (err, content) ->
+          should.not.exist err
+          content.should.eql "(function() {\n  React.createElement(\"div\", {\n    \"className\": 'something'\n  });\n\n}).call(this);\n"
+          fs.unlink "#{__dirname}/cjsx/public/js/test.js"
+          next()
+
   it 'should compile with force option', (next) ->
     rimraf "#{__dirname}/../sample/public", (err) ->
       options =
